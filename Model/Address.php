@@ -1,6 +1,6 @@
 <?php
 /**
- * Neighbourhood Model for Address Plugin
+ * Address Model for Address Plugin
  *
  * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
  * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
@@ -21,7 +21,7 @@
 App::uses('AddressAppModel', 'Address.Model');
 
 /**
- * Neighbourhood Model
+ * Address Model
  *
  * @category  Plugin
  * @package   AddressModel
@@ -30,9 +30,9 @@ App::uses('AddressAppModel', 'Address.Model');
  * @license   http://www.opensource.org/licenses/mit-license.php MIT License
  * @version   1.0
  * @link      http://github.com/luksm/Address
- * @property City $City
+ * @property State $State
  */
-class Neighbourhood extends AddressAppModel
+class Address extends AddressAppModel
 {
 
     /**
@@ -47,7 +47,7 @@ class Neighbourhood extends AddressAppModel
      *
      * @var string
      */
-    public $displayField = 'neighbourhood';
+    public $displayField = 'address';
 
     /**
      * Validation rules
@@ -55,7 +55,27 @@ class Neighbourhood extends AddressAppModel
      * @var array
      */
     public $validate = array(
-        'city_id' => array(
+        'address' => array(
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+                //'message' => 'Your custom message here',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+        ),
+        'zip' => array(
+            'notEmpty' => array(
+                'rule' => array('notEmpty'),
+                //'message' => 'Your custom message here',
+                //'allowEmpty' => false,
+                //'required' => false,
+                //'last' => false, // Stop validation after this rule
+                //'on' => 'create', // Limit validation to 'create' or 'update' operations
+            ),
+        ),
+        'neighbourhood_id' => array(
             'numeric' => array(
                 'rule' => array('numeric'),
                 //'message' => 'Your custom message here',
@@ -65,9 +85,9 @@ class Neighbourhood extends AddressAppModel
                 //'on' => 'create', // Limit validation to 'create' or 'update' operations
             ),
         ),
-        'neighbourhood' => array(
-            'notEmpty' => array(
-                'rule' => array('notEmpty'),
+        'city_id' => array(
+            'numeric' => array(
+                'rule' => array('numeric'),
                 //'message' => 'Your custom message here',
                 //'allowEmpty' => false,
                 //'required' => false,
@@ -85,33 +105,19 @@ class Neighbourhood extends AddressAppModel
      * @var array
      */
     public $belongsTo = array(
+        'Neighbourhood' => array(
+            'className' => 'Address.Neighbourhood',
+            'foreignKey' => 'neighbourhood_id',
+            'conditions' => '',
+            'fields' => '',
+            'order' => ''
+        ),
         'City' => array(
             'className' => 'Address.City',
             'foreignKey' => 'city_id',
             'conditions' => '',
             'fields' => '',
             'order' => ''
-        )
-    );
-
-    /**
-     * hasMany associations
-     *
-     * @var array
-     */
-    public $hasMany = array(
-        'Address' => array(
-            'className' => 'Address.Address',
-            'foreignKey' => 'neighbourhood_id',
-            'dependent' => false,
-            'conditions' => '',
-            'fields' => '',
-            'order' => '',
-            'limit' => '',
-            'offset' => '',
-            'exclusive' => '',
-            'finderQuery' => '',
-            'counterQuery' => ''
         )
     );
 }
