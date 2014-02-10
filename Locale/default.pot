@@ -16,7 +16,7 @@ msgstr ""
 
 #: Controller/AddressesController.php:65;103;133
 msgid "Invalid address"
-msgstr "Endereço inválido"
+msgstr ""
 
 #: Controller/AddressesController.php:81;107
 msgid "The address has been saved."
@@ -153,7 +153,7 @@ msgstr ""
 #: View/States/admin_index.ctp:9;42
 #: View/States/admin_view.ctp:27;48
 msgid "Actions"
-msgstr "Ações"
+msgstr ""
 
 #: View/Addresses/admin_add.ctp:19
 #: View/Addresses/admin_edit.ctp:21
@@ -167,7 +167,7 @@ msgstr "Ações"
 #: View/Neighbourhoods/admin_index.ctp:45
 #: View/Neighbourhoods/admin_view.ctp:30
 msgid "List Addresses"
-msgstr "Listagem de Endereços"
+msgstr ""
 
 #: View/Addresses/admin_add.ctp:20
 #: View/Addresses/admin_edit.ctp:22
@@ -186,7 +186,7 @@ msgstr "Listagem de Endereços"
 #: View/States/admin_index.ctp:47
 #: View/States/admin_view.ctp:35
 msgid "List Cities"
-msgstr "Listagem de Cidades"
+msgstr ""
 
 #: View/Addresses/admin_add.ctp:21
 #: View/Addresses/admin_edit.ctp:23
@@ -204,7 +204,7 @@ msgstr "Listagem de Cidades"
 #: View/States/admin_index.ctp:48
 #: View/States/admin_view.ctp:36;68
 msgid "New City"
-msgstr "Nova Cidade"
+msgstr ""
 
 #: View/Addresses/admin_add.ctp:22
 #: View/Addresses/admin_edit.ctp:24
@@ -219,7 +219,7 @@ msgstr "Nova Cidade"
 #: View/Neighbourhoods/admin_edit.ctp:18
 #: View/Neighbourhoods/admin_view.ctp:26
 msgid "List Neighbourhoods"
-msgstr "Lista de Bairros"
+msgstr ""
 
 #: View/Addresses/admin_add.ctp:23
 #: View/Addresses/admin_edit.ctp:25
@@ -233,7 +233,7 @@ msgstr "Lista de Bairros"
 #: View/Neighbourhoods/admin_index.ctp:42
 #: View/Neighbourhoods/admin_view.ctp:27
 msgid "New Neighbourhood"
-msgstr "Novo Bairro"
+msgstr ""
 
 #: View/Addresses/admin_edit.ctp:4
 msgid "Admin Edit Address"
@@ -276,7 +276,7 @@ msgstr ""
 
 #: View/Addresses/admin_index.ctp:2
 msgid "Addresses"
-msgstr "Endereços"
+msgstr ""
 
 #: View/Addresses/admin_index.ctp:26
 #: View/Cities/admin_index.ctp:20
@@ -288,7 +288,7 @@ msgstr "Endereços"
 #: View/States/admin_index.ctp:20
 #: View/States/admin_view.ctp:57
 msgid "View"
-msgstr "Ver"
+msgstr ""
 
 #: View/Addresses/admin_index.ctp:27
 #: View/Cities/admin_index.ctp:21
@@ -300,7 +300,7 @@ msgstr "Ver"
 #: View/States/admin_index.ctp:21
 #: View/States/admin_view.ctp:58
 msgid "Edit"
-msgstr "Editar"
+msgstr ""
 
 #: View/Addresses/admin_index.ctp:36
 #: View/Cities/admin_index.ctp:30
@@ -308,7 +308,7 @@ msgstr "Editar"
 #: View/Neighbourhoods/admin_index.ctp:28
 #: View/States/admin_index.ctp:30
 msgid "Page {:page} of {:pages}, showing {:current} records out of {:count} total, starting on record {:start}, ending on {:end}"
-msgstr "Página {:page} de {:pages}, mostrando {:current} registros de um total de {:count}, iniciando no registro {:start}, terminando no registro {:end}"
+msgstr ""
 
 #: View/Addresses/admin_index.ctp:41
 #: View/Cities/admin_index.ctp:35
@@ -316,7 +316,7 @@ msgstr "Página {:page} de {:pages}, mostrando {:current} registros de um total 
 #: View/Neighbourhoods/admin_index.ctp:33
 #: View/States/admin_index.ctp:35
 msgid "previous"
-msgstr "anterior"
+msgstr ""
 
 #: View/Addresses/admin_index.ctp:43
 #: View/Cities/admin_index.ctp:37
@@ -324,7 +324,7 @@ msgstr "anterior"
 #: View/Neighbourhoods/admin_index.ctp:35
 #: View/States/admin_index.ctp:37
 msgid "next"
-msgstr "próximo"
+msgstr ""
 
 #: View/Addresses/admin_index.ctp:50
 #: View/Addresses/admin_view.ctp:42
@@ -338,13 +338,13 @@ msgstr "próximo"
 #: View/Neighbourhoods/admin_index.ctp:46
 #: View/Neighbourhoods/admin_view.ctp:31;67
 msgid "New Address"
-msgstr "Novo Endereço"
+msgstr ""
 
 #: View/Addresses/admin_view.ctp:2;14
 #: View/Cities/admin_view.ctp:48
 #: View/Neighbourhoods/admin_view.ctp:41
 msgid "Address"
-msgstr "Endereço"
+msgstr ""
 
 #: View/Addresses/admin_view.ctp:4
 #: View/Cities/admin_view.ctp:4;46;83
@@ -358,26 +358,26 @@ msgstr ""
 #: View/Cities/admin_view.ctp:47
 #: View/Neighbourhoods/admin_view.ctp:40
 msgid "Information"
-msgstr "Informação"
+msgstr ""
 
 #: View/Addresses/admin_view.ctp:19
 #: View/Cities/admin_view.ctp:49
 #: View/Neighbourhoods/admin_view.ctp:42
 msgid "Zip"
-msgstr "CEP"
+msgstr ""
 
 #: View/Addresses/admin_view.ctp:24
 #: View/Cities/admin_view.ctp:2;14
 #: View/Neighbourhoods/admin_view.ctp:9
 #: View/States/admin_view.ctp:46
 msgid "City"
-msgstr "Cidade"
+msgstr ""
 
 #: View/Addresses/admin_view.ctp:29
 #: View/Cities/admin_view.ctp:85
 #: View/Neighbourhoods/admin_view.ctp:2;14
 msgid "Neighbourhood"
-msgstr "Bairro"
+msgstr ""
 
 #: View/Addresses/admin_view.ctp:39
 msgid "Edit Address"
@@ -407,7 +407,7 @@ msgstr ""
 #: View/States/admin_edit.ctp:19
 #: View/States/admin_view.ctp:31
 msgid "List States"
-msgstr "Lista de Estados"
+msgstr ""
 
 #: View/Cities/admin_add.ctp:19
 #: View/Cities/admin_edit.ctp:21
@@ -420,7 +420,7 @@ msgstr "Lista de Estados"
 #: View/States/admin_index.ctp:44
 #: View/States/admin_view.ctp:32
 msgid "New State"
-msgstr "Novo Estado"
+msgstr ""
 
 #: View/Cities/admin_edit.ctp:4
 msgid "Admin Edit City"
@@ -442,7 +442,7 @@ msgstr ""
 #: View/Countries/admin_view.ctp:39
 #: View/States/admin_view.ctp:2;14
 msgid "State"
-msgstr "Estado"
+msgstr ""
 
 #: View/Cities/admin_view.ctp:19
 #: View/States/admin_view.ctp:47
@@ -451,16 +451,16 @@ msgstr ""
 
 #: View/Cities/admin_view.ctp:29
 msgid "Edit City"
-msgstr "Editar Cidade"
+msgstr ""
 
 #: View/Cities/admin_view.ctp:30
 msgid "Delete City"
-msgstr "Excluir Cidade"
+msgstr ""
 
 #: View/Cities/admin_view.ctp:42
 #: View/Neighbourhoods/admin_view.ctp:35
 msgid "Related Addresses"
-msgstr "Endereços Relacionados"
+msgstr ""
 
 #: View/Cities/admin_view.ctp:50;84
 #: View/Neighbourhoods/admin_view.ctp:43
@@ -496,7 +496,7 @@ msgstr ""
 
 #: View/Countries/admin_index.ctp:2
 msgid "Countries"
-msgstr "Países"
+msgstr ""
 
 #: View/Countries/admin_index.ctp:40
 #: View/Countries/admin_view.ctp:27
@@ -510,15 +510,15 @@ msgstr ""
 #: View/Countries/admin_view.ctp:2;9
 #: View/States/admin_view.ctp:9
 msgid "Country"
-msgstr "País"
+msgstr ""
 
 #: View/Countries/admin_view.ctp:14
 msgid "Abbr"
-msgstr "Abreviação"
+msgstr ""
 
 #: View/Countries/admin_view.ctp:24
 msgid "Edit Country"
-msgstr "Editar País"
+msgstr ""
 
 #: View/Countries/admin_view.ctp:25
 msgid "Delete Country"

@@ -120,4 +120,26 @@ class Address extends AddressAppModel
             'order' => ''
         )
     );
+
+    /**
+     * getByZip
+     *
+     * Filter addresses by zipcode
+     *
+     * @param string $zip Zipcode
+     *
+     * @return array of Addresses
+     *
+     */
+    public function getByZip($zip)
+    {
+        return $this->find(
+            'all',
+            array(
+                'conditions' => array(
+                    "zip LIKE" => $zip . "%"
+                )
+            )
+        );
+    }
 }

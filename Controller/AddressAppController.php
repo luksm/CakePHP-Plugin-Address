@@ -37,4 +37,22 @@ App::uses('AppController', 'Controller');
  */
 class AddressAppController extends AppController
 {
+    /**
+     * Components
+     *
+     * @var array
+     */
+    var $components = array('Session') ;
+
+    /**
+     * beforeFilter callback
+     *
+     * @return void
+     */
+    public function beforeFilter()
+    {
+        debug(Configure::read("Config.language"));
+        parent::beforeFilter();
+    }
+
 }
