@@ -14,7 +14,7 @@ class AddressesController extends AddressAppController
      *
      * @var array
      */
-    public $components = array('Paginator');
+    public $components = array('Paginator', 'RequestHandler');
 
     /**
      * zip method
@@ -49,6 +49,12 @@ class AddressesController extends AddressAppController
     public function admin_index()
     {
         $this->Address->recursive = 0;
+        $this->Address->Behaviors->load('Containable');
+
+
+        $this->Paginator->settings = array(
+            'contain' => array('Neighbourhood.City.State'),
+        );
         $this->set('addresses', $this->Paginator->paginate());
     }
 

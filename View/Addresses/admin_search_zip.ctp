@@ -1,10 +1,12 @@
 <?php
 echo $this->Html->Script(
-    "//code.jquery.com/jquery-1.10.2.min.js", 
+    "//code.jquery.com/jquery-1.10.2.min.js",
     array('inline' => false)
 );
-
-$url = $this->Html->url(array("admin" => false , "plugin" => 'address', 'controller' => 'addresses', 'action' => 'zip')) . DS;
+echo $this->Html->Script(
+    "Address.address",
+    array('inline' => false)
+);
 
 $th = array(
     "zip"     => __d('address', "Zip"),
@@ -15,22 +17,7 @@ $th = array(
 
 
 $js = <<<EOD
-var xhr;
-
-function zip(zip) {
-
-    if(xhr && xhr.readystate != 4){
-        xhr.abort();
-    }
-
-    xhr = $.ajax({
-        url: "{$url}" + zip,
-        dataType: "json"
-    })
-    .done(function(data) {
-        printResult(data);
-    });
-}
+var webroot = "{$this->webroot}";
 
 function printResult(data) {
 
@@ -61,7 +48,6 @@ function printResult(data) {
     table.appendChild(tr);
 
     $.each(data, function( index, value ) {
-        console.log(value);
         var tr = document.createElement("tr");
 
         var td = document.createElement("td");
@@ -97,11 +83,12 @@ function printResult(data) {
 
 $( document ).ready(function() {
     var lastZip = "";
+    var address = "";
 
     $("#AddressZip").keyup(function() {
         if (lastZip != this.value) {
             lastZip = this.value;
-            zip(this.value);
+            zip(this.value, printResult);
         }
     });
 });
@@ -109,7 +96,7 @@ $( document ).ready(function() {
 EOD;
 
 echo $this->Html->ScriptBlock(
-    $js, 
+    $js,
     array(
         'inline' => false,
         'block' => "script"
@@ -118,7 +105,7 @@ echo $this->Html->ScriptBlock(
 
 if (!empty($zip)) {
     echo $this->Html->ScriptBlock(
-        '$( document ).ready(function() { $( "#AddressZip" ).trigger( "keyup" ); });', 
+        '$( document ).ready(function() { $( "#AddressZip" ).trigger( "keyup" ); });',
         array(
             'inline' => false,
             'block' => "script"
@@ -138,6 +125,9 @@ if (!empty($zip)) {
     <div id="results">
     </div>
 <?php echo $this->Form->end(); ?>
+
+
+<?php echo $this->element('Address.searchZip'); ?>
 </div>
 <div class="actions">
     <h3><?php echo __d('address', 'Actions'); ?></h3>

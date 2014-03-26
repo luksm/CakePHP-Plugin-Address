@@ -3,8 +3,11 @@
     <fieldset>
         <legend><?php echo __d('address', 'Admin Edit Address'); ?></legend>
     <?php
-    
         echo $this->Form->input('zip', array("label" => __d('address', "Zip")));
+    ?>
+    <div id="result">
+    </div>
+    <?php
         echo $this->Form->input('information', array("label" => __d('address', "Information")));
         echo $this->Form->input('address', array("label" => __d('address', "Address")));
         echo $this->Form->input('state_id', array("label" => __d('address', "State")));
@@ -17,7 +20,7 @@
 <div class="actions">
     <h3><?php echo __d('address', 'Actions'); ?></h3>
     <ul>
-        
+
         <li><?php echo $this->Html->link(__d('address', 'List Addresses'), array('action' => 'index')); ?></li>
         <li><?php echo $this->Html->link(__d('address', 'List Cities'), array('controller' => 'cities', 'action' => 'index')); ?> </li>
         <li><?php echo $this->Html->link(__d('address', 'New City'), array('controller' => 'cities', 'action' => 'add')); ?> </li>
@@ -27,7 +30,7 @@
 
 <?php
 echo $this->Html->Script(
-    "//code.jquery.com/jquery-1.10.2.min.js", 
+    "//code.jquery.com/jquery-1.10.2.min.js",
     array('inline' => false)
 );
 
@@ -35,7 +38,7 @@ $webroot = $this->webroot;
 
 $js = <<<EOD
 var xhr;
-var webroot = {$webroot} + "/address/";
+var webroot = "{$webroot}" + "address/";
 
 function zip(zip) {
 
@@ -50,12 +53,26 @@ function zip(zip) {
         dataType: "json"
     })
     .done(function(data) {
-        console.log(data.logradouro);
+
+        // Change the state
+        var states = document.getElementById("AddressStateId");
+        for(var opt in states) {
+            if(states[opt].value == data.uf) {
+                states.selectedIndex = opt;
+                break;
+            }
+        }
+
+        // Change the city
         loadCities(document.getElementById("AddressCityId"), data.uf, data.localidade);
+
+        // Change the Neighbourhood
         loadHoods(document.getElementById("AddressNeighbourhoodId"), data.uf, data.localidade, data.bairro);
 
         document.getElementById("AddressAddress").value = data.logradouro;
         document.getElementById("AddressInformation").value = data.logradouro;
+
+        document.getElementById("result").textContent = data.logradouro + " - " + data.bairro + " - " + data.localidade + " - " + data.uf;
     });
 }
 
@@ -70,8 +87,6 @@ function loadCities(dest, uf, select = false) {
             sel.removeChild(sel.firstChild);
         }
         for (var i in data) {
-            console.log(i);
-            console.log(data[i]);
 
             var option = document.createElement('option');
             option.value = i;
@@ -97,9 +112,6 @@ function loadHoods(dest, uf, city, select = false) {
             sel.removeChild(sel.firstChild);
         }
         for (var i in data) {
-            console.log(i);
-            console.log(data[i]);
-
             var option = document.createElement('option');
             option.value = i;
             option.textContent = data[i];
@@ -148,7 +160,7 @@ $( document ).ready(function() {
 EOD;
 
 echo $this->Html->ScriptBlock(
-    $js, 
+    $js,
     array(
         'inline' => false,
         'block' => "script"
@@ -157,7 +169,7 @@ echo $this->Html->ScriptBlock(
 
 if (!empty($zip)) {
     echo $this->Html->ScriptBlock(
-        '$( document ).ready(function() { $( "#AddressZip" ).trigger( "keyup" ); });', 
+        '$( document ).ready(function() { $( "#AddressZip" ).trigger( "keyup" ); });',
         array(
             'inline' => false,
             'block' => "script"

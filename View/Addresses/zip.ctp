@@ -1,1 +1,4 @@
-<?php echo  json_encode($addresses); ?>
+<?php
+header('Content-Type: application/json');
+echo json_encode($addresses);
+?>
