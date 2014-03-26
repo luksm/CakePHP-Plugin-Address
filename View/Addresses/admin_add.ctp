@@ -7,7 +7,7 @@
         echo $this->Form->input('zip', array("label" => __d('address', "Zip")));
         echo $this->Form->input('information', array("label" => __d('address', "Information")));
         echo $this->Form->input('address', array("label" => __d('address', "Address")));
-        echo $this->Form->input('state_id', array("label" => __d('address', "City")));
+        echo $this->Form->input('state_id', array("label" => __d('address', "State")));
         echo $this->Form->input('city_id', array("label" => __d('address', "City")));
         echo $this->Form->input('neighbourhood_id', array("label" => __d('address', "Neighbourhood")));
     ?>
@@ -31,18 +31,11 @@ echo $this->Html->Script(
     array('inline' => false)
 );
 
-$url = $this->Html->url(array("admin" => false , "plugin" => 'address', 'controller' => 'addresses', 'action' => 'zip')) . DS;
-
-$th = array(
-    "zip"     => __d('address', "Zip"),
-    "address" => __d('address', "Address"),
-    "hood"    => __d('address', "Neighbourhood"),
-    "city"    => __d('address', "City")
-);
-
+$webroot = $this->webroot;
 
 $js = <<<EOD
 var xhr;
+var webroot = {$webroot} + "/address/";
 
 function zip(zip) {
 
@@ -57,19 +50,98 @@ function zip(zip) {
         dataType: "json"
     })
     .done(function(data) {
-        console.log(data);
+        console.log(data.logradouro);
+        loadCities(document.getElementById("AddressCityId"), data.uf, data.localidade);
+        loadHoods(document.getElementById("AddressNeighbourhoodId"), data.uf, data.localidade, data.bairro);
+
+        document.getElementById("AddressAddress").value = data.logradouro;
+        document.getElementById("AddressInformation").value = data.logradouro;
     });
+}
+
+function loadCities(dest, uf, select = false) {
+    xhr = $.ajax({
+        url: webroot + "cities/byState/" + uf,
+        dataType: "json"
+    })
+    .done(function(data) {
+        var sel = dest;
+        while (sel.firstChild) {
+            sel.removeChild(sel.firstChild);
+        }
+        for (var i in data) {
+            console.log(i);
+            console.log(data[i]);
+
+            var option = document.createElement('option');
+            option.value = i;
+            option.textContent = data[i];
+
+            if (select == data[i]) {
+                option.defaultSelected = "selected";
+            }
+
+            sel.appendChild(option);
+        }
+    });
+}
+
+function loadHoods(dest, uf, city, select = false) {
+    xhr = $.ajax({
+        url: webroot + "neighbourhoods/byStateCity/" + uf + '-' + city,
+        dataType: "json"
+    })
+    .done(function(data) {
+        var sel = dest;
+        while (sel.firstChild) {
+            sel.removeChild(sel.firstChild);
+        }
+        for (var i in data) {
+            console.log(i);
+            console.log(data[i]);
+
+            var option = document.createElement('option');
+            option.value = i;
+            option.textContent = data[i];
+
+            if (select == data[i]) {
+                option.defaultSelected = "selected";
+            }
+
+            sel.appendChild(option);
+        }
+    });
+}
+
+function getSelectedText(elementId) {
+    var elt = document.getElementById(elementId);
+
+    if (elt.selectedIndex == -1)
+        return null;
+
+    return elt.options[elt.selectedIndex].text;
 }
 
 
 $( document ).ready(function() {
     var lastZip = "";
+    var states = document.getElementById("AddressStateId");
+    var cities = document.getElementById("AddressCityId");
+    var hoods  = document.getElementById("AddressNeighbourhoodId");
 
     $("#AddressZip").keyup(function() {
         if (lastZip != this.value) {
             lastZip = this.value;
             zip(this.value);
         }
+    });
+
+    $("#AddressStateId").change(function() {
+        loadCities(cities, this.value);
+    });
+
+    $("#AddressCityId").change(function() {
+        loadHoods(hoods, states.value, getSelectedText(this.id));
     });
 });
 

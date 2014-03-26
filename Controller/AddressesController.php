@@ -87,7 +87,7 @@ class AddressesController extends AddressAppController
         }
         $neighbourhoods = $this->Address->Neighbourhood->find('list');
         $cities = $this->Address->Neighbourhood->City->find('list');
-        $states = $this->Address->Neighbourhood->City->State->find('list');
+        $states = $this->Address->Neighbourhood->City->State->find('list', array('fields' => array('fu', 'state')));
         $this->set(compact('states', 'cities', 'neighbourhoods'));
     }
 

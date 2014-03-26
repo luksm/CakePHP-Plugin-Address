@@ -3,8 +3,8 @@
 	<fieldset>
 		<legend><?php echo __d('address', 'Admin Add Neighbourhood'); ?></legend>
 	<?php
-		echo $this->Form->input('city_id', __d('address', 'City'));
-		echo $this->Form->input('neighbourhood', __d('address', 'Neighbourhoods'));
+		echo $this->Form->input('city_id', array("label" => __d('address', "City")));
+		echo $this->Form->input('neighbourhood', array("label" => __d('address', "Neighbourhoods")));
 	?>
 	</fieldset>
 <?php echo $this->Form->end(__d('address', 'Submit')); ?>
