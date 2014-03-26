@@ -111,13 +111,6 @@ class Address extends AddressAppModel
             'conditions' => '',
             'fields' => '',
             'order' => ''
-        ),
-        'City' => array(
-            'className' => 'Address.City',
-            'foreignKey' => 'city_id',
-            'conditions' => '',
-            'fields' => '',
-            'order' => ''
         )
     );
 
@@ -133,13 +126,17 @@ class Address extends AddressAppModel
      */
     public function getByZip($zip)
     {
-        return $this->find(
+        $this->Behaviors->load('Containable');
+        $addresses = $this->find(
             'all',
             array(
                 'conditions' => array(
                     "zip LIKE" => $zip . "%"
-                )
+                ),
+                'contain' => "Neighbourhood.City.State.Country"
             )
         );
+
+        return $addresses;
     }
 }

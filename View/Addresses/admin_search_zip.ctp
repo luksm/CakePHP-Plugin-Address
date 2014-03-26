@@ -4,10 +4,27 @@ echo $this->Html->Script(
     array('inline' => false)
 );
 
+$url = $this->Html->url(array("admin" => false , "plugin" => 'address', 'controller' => 'addresses', 'action' => 'zip')) . DS;
+
+$th = array(
+    "zip"     => __d('address', "Zip"),
+    "address" => __d('address', "Address"),
+    "hood"    => __d('address', "Neighbourhood"),
+    "city"    => __d('address', "City")
+);
+
+
 $js = <<<EOD
+var xhr;
+
 function zip(zip) {
-    $.ajax({
-        url: "/address/addresses/zip/" + zip,
+
+    if(xhr && xhr.readystate != 4){
+        xhr.abort();
+    }
+
+    xhr = $.ajax({
+        url: "{$url}" + zip,
         dataType: "json"
     })
     .done(function(data) {
@@ -26,24 +43,25 @@ function printResult(data) {
     tr.appendChild(th);
 
     var th = document.createElement("th");
-    th.textContent = "zip";
+    th.textContent = "{$th['zip']}";
     tr.appendChild(th);
 
     var th = document.createElement("th");
-    th.textContent = "address";
+    th.textContent = "{$th['address']}";
     tr.appendChild(th);
 
     var th = document.createElement("th");
-    th.textContent = "neighbourhood";
+    th.textContent = "{$th['hood']}";
     tr.appendChild(th);
 
     var th = document.createElement("th");
-    th.textContent = "city";
+    th.textContent = "{$th['city']}";
     tr.appendChild(th);
 
     table.appendChild(tr);
 
     $.each(data, function( index, value ) {
+        console.log(value);
         var tr = document.createElement("tr");
 
         var td = document.createElement("td");
@@ -63,7 +81,7 @@ function printResult(data) {
         tr.appendChild(td);
 
         var td = document.createElement("td");
-        td.textContent = value.City.city;
+        td.textContent = value.Neighbourhood.City.city + ' - '+ value.Neighbourhood.City.State.fu;
         tr.appendChild(td);
 
         table.appendChild(tr);
@@ -83,15 +101,6 @@ $( document ).ready(function() {
     $("#AddressZip").keyup(function() {
         if (lastZip != this.value) {
             lastZip = this.value;
-
-            zip(this.value);
-        }
-    });
-
-    $("#AddressZip").keyup(function() {
-        if (lastZip != this.value) {
-            lastZip = this.value;
-
             zip(this.value);
         }
     });
@@ -103,7 +112,7 @@ echo $this->Html->ScriptBlock(
     $js, 
     array(
         'inline' => false,
-        'block' => "scriptBlock"
+        'block' => "script"
     )
 );
 
@@ -112,7 +121,7 @@ if (!empty($zip)) {
         '$( document ).ready(function() { $( "#AddressZip" ).trigger( "keyup" ); });', 
         array(
             'inline' => false,
-            'block' => "scriptBlock"
+            'block' => "script"
         )
     );
 }
@@ -120,7 +129,7 @@ if (!empty($zip)) {
 ?><div class="addresses form">
 <?php echo $this->Form->create('Address'); ?>
     <fieldset>
-        <legend><?php echo __('Admin Find Zip'); ?></legend>
+        <legend><?php echo __d('address', 'Find Zip'); ?></legend>
     <?php
         echo $this->Form->input('zip', array("value" => $zip,  "autocomplete" => "off"));
     ?>
@@ -131,12 +140,13 @@ if (!empty($zip)) {
 <?php echo $this->Form->end(); ?>
 </div>
 <div class="actions">
-    <h3><?php echo __('Actions'); ?></h3>
+    <h3><?php echo __d('address', 'Actions'); ?></h3>
     <ul>
-        <li><?php echo $this->Html->link(__('New Address'), array('admin' => true, 'action' => 'add')); ?></li>
-        <li><?php echo $this->Html->link(__('List Cities'), array('admin' => true, 'controller' => 'cities', 'action' => 'index')); ?> </li>
-        <li><?php echo $this->Html->link(__('New City'), array('admin' => true, 'controller' => 'cities', 'action' => 'add')); ?> </li>
-        <li><?php echo $this->Html->link(__('List Neighbourhoods'), array('admin' => true, 'controller' => 'neighbourhoods', 'action' => 'index')); ?> </li>
-        <li><?php echo $this->Html->link(__('New Neighbourhood'), array('admin' => true, 'controller' => 'neighbourhoods', 'action' => 'add')); ?> </li>
+        <li><?php echo $this->Html->link(__d('address', 'List Addresses'), array('admin' => true, 'action' => 'index')); ?> </li>
+        <li><?php echo $this->Html->link(__d('address', 'New Address'), array('admin' => true, 'action' => 'add')); ?></li>
+        <li><?php echo $this->Html->link(__d('address', 'List Cities'), array('admin' => true, 'controller' => 'cities', 'action' => 'index')); ?> </li>
+        <li><?php echo $this->Html->link(__d('address', 'New City'), array('admin' => true, 'controller' => 'cities', 'action' => 'add')); ?> </li>
+        <li><?php echo $this->Html->link(__d('address', 'List Neighbourhoods'), array('admin' => true, 'controller' => 'neighbourhoods', 'action' => 'index')); ?> </li>
+        <li><?php echo $this->Html->link(__d('address', 'New Neighbourhood'), array('admin' => true, 'controller' => 'neighbourhoods', 'action' => 'add')); ?> </li>
     </ul>
 </div>

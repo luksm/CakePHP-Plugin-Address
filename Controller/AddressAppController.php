@@ -51,7 +51,6 @@ class AddressAppController extends AppController
      */
     public function beforeFilter()
     {
-        debug(Configure::read("Config.language"));
         parent::beforeFilter();
     }
 

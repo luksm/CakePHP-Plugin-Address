@@ -129,4 +129,32 @@ class State extends AddressAppModel
         )
     );
 
+    /**
+     * getByCountry
+     *
+     * Filter states by country abbr
+     *
+     * @param string $country Abbr
+     *
+     * @return array of states
+     *
+     */
+    public function getByCountry($country)
+    {
+        $return = false;
+        $country = $this->Country->find('first', array('conditions' => array('abbr' => $country), 'recursive' => -1));
+
+        if ($country) {
+            $return = $this->find(
+                'list',
+                array(
+                    'conditions' => array(
+                        "country_id" => $country['Country']['id']
+                    )
+                )
+            );
+        }
+
+        return $return;
+    }
 }

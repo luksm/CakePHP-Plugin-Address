@@ -17,6 +17,19 @@ class CitiesController extends AddressAppController
     public $components = array('Paginator');
 
     /**
+     * return cities by countty
+     *
+     * @param string $state state Abbr
+     *
+     * @return void
+     */
+    public function byState($state)
+    {
+        $this->layout = 'ajax';
+        $this->set('result', $this->City->getByState($state));
+    }
+    
+    /**
      * admin_index method
      *
      * @return void

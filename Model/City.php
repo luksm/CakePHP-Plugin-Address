@@ -123,20 +123,35 @@ class City extends AddressAppModel
             'exclusive' => '',
             'finderQuery' => '',
             'counterQuery' => ''
-        ),
-        'Address' => array(
-            'className' => 'Address.Address',
-            'foreignKey' => 'city_id',
-            'dependent' => false,
-            'conditions' => '',
-            'fields' => '',
-            'order' => '',
-            'limit' => '',
-            'offset' => '',
-            'exclusive' => '',
-            'finderQuery' => '',
-            'counterQuery' => ''
         )
     );
 
+    /**
+     * getByState
+     *
+     * Filter cities by state abbr
+     *
+     * @param string $state Abbr
+     *
+     * @return array of states
+     *
+     */
+    public function getByState($state)
+    {
+        $return = false;
+        $state = $this->State->find('first', array('conditions' => array('fu' => $state), 'recursive' => -1));
+
+        if ($state) {
+            $return = $this->find(
+                'list',
+                array(
+                    'conditions' => array(
+                        "state_id" => $state['State']['id']
+                    )
+                )
+            );
+        }
+
+        return $return;
+    }
 }

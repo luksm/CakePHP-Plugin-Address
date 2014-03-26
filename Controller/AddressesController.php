@@ -17,18 +17,6 @@ class AddressesController extends AddressAppController
     public $components = array('Paginator');
 
     /**
-     * Search zip method
-     *
-     * @param string $zip Addresses zip
-     *
-     * @return void
-     */
-    public function searchZip($zip = false)
-    {
-        $this->set('zip', $zip);
-    }
-
-    /**
      * zip method
      *
      * @param string $zip Addresses zip
@@ -39,6 +27,18 @@ class AddressesController extends AddressAppController
     {
         $this->layout = 'ajax';
         $this->set('addresses', $this->Address->getByZip($zip));
+    }
+
+    /**
+     * Search zip method
+     *
+     * @param string $zip Addresses zip
+     *
+     * @return void
+     */
+    public function admin_searchZip($zip = false)
+    {
+        $this->set('zip', $zip);
     }
 
     /**
@@ -85,9 +85,10 @@ class AddressesController extends AddressAppController
                 $this->Session->setFlash(__('The address could not be saved. Please, try again.'));
             }
         }
-        $cities = $this->Address->City->find('list');
         $neighbourhoods = $this->Address->Neighbourhood->find('list');
-        $this->set(compact('cities', 'neighbourhoods'));
+        $cities = $this->Address->Neighbourhood->City->find('list');
+        $states = $this->Address->Neighbourhood->City->State->find('list');
+        $this->set(compact('states', 'cities', 'neighbourhoods'));
     }
 
     /**
@@ -114,9 +115,10 @@ class AddressesController extends AddressAppController
             $options = array('conditions' => array('Address.' . $this->Address->primaryKey => $id));
             $this->request->data = $this->Address->find('first', $options);
         }
-        $cities = $this->Address->City->find('list');
         $neighbourhoods = $this->Address->Neighbourhood->find('list');
-        $this->set(compact('cities', 'neighbourhoods'));
+        $cities = $this->Address->Neighbourhood->City->find('list');
+        $states = $this->Address->Neighbourhood->City->State->find('list');
+        $this->set(compact('states', 'cities', 'neighbourhoods'));
     }
 
     /**

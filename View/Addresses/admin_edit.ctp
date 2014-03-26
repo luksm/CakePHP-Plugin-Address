@@ -4,9 +4,9 @@
 		<legend><?php echo __d('address', 'Admin Edit Address'); ?></legend>
 	<?php
 		echo $this->Form->input('id');
+		echo $this->Form->input('zip', array("label" => __d('address', "Zip")));
 		echo $this->Form->input('information', array("label" => __d('address', "Information")));
 		echo $this->Form->input('address', array("label" => __d('address', "Address")));
-		echo $this->Form->input('zip', array("label" => __d('address', "Zip")));
 		echo $this->Form->input('city_id', array("label" => __d('address', "City")));
 		echo $this->Form->input('neighbourhood_id', array("label" => __d('address', "Neighbourhood")));
 	?>

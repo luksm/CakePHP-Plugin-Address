@@ -114,4 +114,37 @@ class Neighbourhood extends AddressAppModel
             'counterQuery' => ''
         )
     );
+
+    /**
+     * getByCity
+     *
+     * Filter hoods by city
+     *
+     * @param string $city City name
+     *
+     * @return array of states
+     *
+     */
+    public function getByStateCity($city)
+    {
+        $return = false;
+
+        $state = substr($city, 0, 2);
+        $city = substr($city, 3);
+
+        $city = $this->City->find('first', array('conditions' => array('City.city' => $city, 'State.fu' => $state)));
+
+        if ($city) {
+            $return = $this->find(
+                'list',
+                array(
+                    'conditions' => array(
+                        "city_id" => $city['City']['id']
+                    )
+                )
+            );
+        }
+
+        return $return;
+    }
 }

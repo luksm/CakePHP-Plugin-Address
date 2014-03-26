@@ -17,6 +17,19 @@ class StatesController extends AddressAppController
     public $components = array('Paginator');
 
     /**
+     * return states by countty
+     *
+     * @param string $country country Abbr
+     *
+     * @return void
+     */
+    public function byCountry($country)
+    {
+        $this->layout = 'ajax';
+        $this->set('result', $this->State->getByCountry($country));
+    }
+
+    /**
      * admin_index method
      *
      * @return void

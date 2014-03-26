@@ -17,6 +17,19 @@ class NeighbourhoodsController extends AddressAppController
     public $components = array('Paginator');
 
     /**
+     * return Neighbourhood by city
+     *
+     * @param string $city city Name
+     *
+     * @return void
+     */
+    public function byStateCity($city)
+    {
+        $this->layout = 'ajax';
+        $this->set('result', $this->Neighbourhood->getByStateCity($city));
+    }
+
+    /**
      * admin_index method
      *
      * @return void
