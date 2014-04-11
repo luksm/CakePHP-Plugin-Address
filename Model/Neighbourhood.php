@@ -116,6 +116,21 @@ class Neighbourhood extends AddressAppModel
     );
 
     /**
+     * before Save
+     *
+     * We'll generate the slug
+     *
+     * @param array $options Array of Options
+     *
+     * @return boolean
+     */
+    public function beforeSave($options = array()) {
+        if (!empty($this->data['Neighbourhood']['neighbourhood'])) {
+            $this->data['Neighbourhood']['slug'] = strtolower(Inflector::slug($this->data['Neighbourhood']['neighbourhood'], $replacement = '_'));
+        }
+        return true;
+    }
+    /**
      * getByCity
      *
      * Filter hoods by city

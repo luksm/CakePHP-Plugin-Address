@@ -45,6 +45,7 @@ class AddressSchema extends CakeSchema
         'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
         'state_id' => array('type' => 'integer', 'null' => false, 'default' => null),
         'city' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 200, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+        'slug' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 200, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
         'capital' => array('type' => 'boolean', 'null' => false, 'default' => '0'),
         'indexes' => array(
             'PRIMARY' => array('column' => 'id', 'unique' => 1)
@@ -65,7 +66,8 @@ class AddressSchema extends CakeSchema
     public $address_neighbourhoods = array(
         'id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'primary'),
         'city_id' => array('type' => 'integer', 'null' => false, 'default' => null, 'key' => 'index'),
-        'neighbourhood' => array('type' => 'string', 'null' => false, 'default' => null, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+        'slug' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 200, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
+        'neighbourhood' => array('type' => 'string', 'null' => false, 'default' => null, 'length' => 200, 'collate' => 'utf8_general_ci', 'charset' => 'utf8'),
         'indexes' => array(
             'PRIMARY' => array('column' => 'id', 'unique' => 1),
             'city_id' => array('column' => 'city_id', 'unique' => 0)

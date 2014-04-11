@@ -127,6 +127,22 @@ class City extends AddressAppModel
     );
 
     /**
+     * before Save
+     *
+     * We'll generate the slug
+     *
+     * @param array $options Array of Options
+     *
+     * @return boolean
+     */
+    public function beforeSave($options = array()) {
+        if (!empty($this->data['City']['city'])) {
+            $this->data['City']['slug'] = strtolower(Inflector::slug($this->data['City']['city'], $replacement = '_'));
+        }
+        return true;
+    }
+
+    /**
      * getByState
      *
      * Filter cities by state abbr
@@ -153,5 +169,14 @@ class City extends AddressAppModel
         }
 
         return $return;
+    }
+
+    /**
+     *
+     */
+    public function listCitiesAndState()
+    {
+         $this->unbindModel(array('hasMany' => array('Neighbourhood')));
+         return $this->find("all", array("order" => "city ASC"));
     }
 }
