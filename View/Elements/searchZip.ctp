@@ -14,14 +14,19 @@ var lastZip = "";
 var id = "{$id}";
 var name = "{$name}";
 
+function emptyField() {
+    var div = document.getElementById("zipFinderResults");
+    while (div.firstChild) {
+        div.removeChild(div.firstChild);
+    }    
+}
+
 function createField(data) {
     var div = document.getElementById("zipFinderResults");
     var total = data.length;
     var c = 0;
 
-    while (div.firstChild) {
-        div.removeChild(div.firstChild);
-    }
+    emptyField();
 
     for (c; c < total; c++) {
         var d = data[c];
@@ -45,6 +50,9 @@ function createField(data) {
 
 $( document ).ready(function() {
     $("#zipFinder").keyup(function() {
+        if (this.value.length == 0) {
+            emptyField();
+        }
         if (lastZip != this.value) {
             lastZip = this.value;
             zip(this.value, createField);
