@@ -1,27 +1,46 @@
 <div class="cities form">
-<?php echo $this->Form->create('City'); ?>
-	<fieldset>
-		<legend><?php echo __d('address', 'Admin Edit City'); ?></legend>
-	<?php
-		echo $this->Form->input('id');
+    <h2><?php echo __d('address', 'Admin Add City'); ?></h2>
+    <?php echo $this->Form->create('City'); ?>
+    <fieldset>
+    <?php
+        echo $this->Form->input('id');
+        echo $this->Form->input('Country', array("label" => __d('address', "Country"), 'selected' => $country));
         echo $this->Form->input('state_id', array("label" => __d('address', "State")));
         echo $this->Form->input('city', array("label" => __d('address', "City")));
         echo $this->Form->input('capital', array("label" => __d('address', "Capital")));
-	?>
-	</fieldset>
+    ?>
+    </fieldset>
 <?php echo $this->Form->end(__d('address', 'Submit')); ?>
 </div>
 <div class="actions">
-	<h3><?php echo __d('address', 'Actions'); ?></h3>
-	<ul>
-
-		<li><?php echo $this->Form->postLink(__d('address', 'Delete'), array('action' => 'delete', $this->Form->value('City.id')), null, __d('address', 'Are you sure you want to delete # %s?', $this->Form->value('City.id'))); ?></li>
-		<li><?php echo $this->Html->link(__d('address', 'List Cities'), array('action' => 'index')); ?></li>
-		<li><?php echo $this->Html->link(__d('address', 'List States'), array('controller' => 'states', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__d('address', 'New State'), array('controller' => 'states', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__d('address', 'List Addresses'), array('controller' => 'addresses', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__d('address', 'New Address'), array('controller' => 'addresses', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__d('address', 'List Neighbourhoods'), array('controller' => 'neighbourhoods', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__d('address', 'New Neighbourhood'), array('controller' => 'neighbourhoods', 'action' => 'add')); ?> </li>
-	</ul>
+    <?php echo $this->element('admin/menu'); ?>
+    <h3><?php echo __d('address', 'Actions'); ?></h3>
+    <ul>
+        <li><?php echo $this->Html->link(__d('address', 'New State'), array('controller' => 'loc_states', 'action' => 'add')); ?> </li>
+    </ul>
 </div>
+
+<?php
+
+$js = <<<EOD
+var webroot = "{$this->webroot}";
+var stateObj = document.getElementById("CityStateId");
+
+function setState(states) {
+    removeChilds(stateObj);
+    for (var id in states)
+    {
+        stateObj.appendChild(newElement("option", states[id].State.state, states[id].State.id, "State" + states[id].State.id));
+    }
+}
+
+$( document ).ready(function() {
+    $("#CityCountry").change(function() { state(this.value, setState); });
+});
+EOD;
+
+/* Grab Google CDN's jQuery. fall back to local if necessary */
+echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js', array('inline' => false));
+echo $this->Html->scriptBlock("!window.jQuery && document.write(unescape('%3Cscript src=\"js/jquery-1.11.0.min.js\"%3E%3C/script%3E'))", array('inline' => false));
+echo $this->Html->Script("Address.address", array('inline' => false));
+echo $this->Html->ScriptBlock( $js, array('inline' => false, 'block' => "script"));

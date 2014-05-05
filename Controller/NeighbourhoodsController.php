@@ -16,6 +16,21 @@ class NeighbourhoodsController extends AddressAppController
      */
     public $components = array('Paginator');
 
+/**
+ * Sets the default pagination settings up
+ *
+ * Override this method or the index() action directly if you want to change
+ * pagination settings. admin_index()
+ *
+ * @return void
+ */
+    protected function _setupAdminPagination() {
+        $this->Paginator->settings = array(
+            'limit' => 20,
+            'order'=> array("Neighbourhood.neighbourhood" => "ASC")
+        );
+    }
+
     /**
      * return Neighbourhood by city
      *
@@ -26,7 +41,7 @@ class NeighbourhoodsController extends AddressAppController
     public function byStateCity($city)
     {
         $this->layout = 'ajax';
-        $this->set('result', $this->Neighbourhood->getByStateCity($city));
+        $this->set('result', $this->{$this->modelClass}->getByStateCity($city));
     }
 
     /**
@@ -36,7 +51,9 @@ class NeighbourhoodsController extends AddressAppController
      */
     public function admin_index()
     {
-        $this->Neighbourhood->recursive = 0;
+        $this->_setupAdminPagination();
+        $this->Paginator->settings[$this->modelClass]['recursive'] = 0;
+
         $this->set('neighbourhoods', $this->Paginator->paginate());
     }
 
@@ -50,11 +67,11 @@ class NeighbourhoodsController extends AddressAppController
      */
     public function admin_view($id = null)
     {
-        if (!$this->Neighbourhood->exists($id)) {
+        if (!$this->{$this->modelClass}->exists($id)) {
             throw new NotFoundException(__('Invalid neighbourhood'));
         }
-        $options = array('conditions' => array('Neighbourhood.' . $this->Neighbourhood->primaryKey => $id));
-        $this->set('neighbourhood', $this->Neighbourhood->find('first', $options));
+        $options = array('conditions' => array('Neighbourhood.' . $this->{$this->modelClass}->primaryKey => $id));
+        $this->set('neighbourhood', $this->{$this->modelClass}->find('first', $options));
     }
 
     /**
@@ -65,15 +82,15 @@ class NeighbourhoodsController extends AddressAppController
     public function admin_add()
     {
         if ($this->request->is('post')) {
-            $this->Neighbourhood->create();
-            if ($this->Neighbourhood->save($this->request->data)) {
+            $this->{$this->modelClass}->create();
+            if ($this->{$this->modelClass}->save($this->request->data)) {
                 $this->Session->setFlash(__('The neighbourhood has been saved.'));
                 return $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(__('The neighbourhood could not be saved. Please, try again.'));
             }
         }
-        $cities = $this->Neighbourhood->City->find('list');
+        $cities = $this->{$this->modelClass}->City->find('list');
         $this->set(compact('cities'));
     }
 
@@ -87,21 +104,21 @@ class NeighbourhoodsController extends AddressAppController
      */
     public function admin_edit($id = null)
     {
-        if (!$this->Neighbourhood->exists($id)) {
+        if (!$this->{$this->modelClass}->exists($id)) {
             throw new NotFoundException(__('Invalid neighbourhood'));
         }
         if ($this->request->is(array('post', 'put'))) {
-            if ($this->Neighbourhood->save($this->request->data)) {
+            if ($this->{$this->modelClass}->save($this->request->data)) {
                 $this->Session->setFlash(__('The neighbourhood has been saved.'));
                 return $this->redirect(array('action' => 'index'));
             } else {
                 $this->Session->setFlash(__('The neighbourhood could not be saved. Please, try again.'));
             }
         } else {
-            $options = array('conditions' => array('Neighbourhood.' . $this->Neighbourhood->primaryKey => $id));
-            $this->request->data = $this->Neighbourhood->find('first', $options);
+            $options = array('conditions' => array('Neighbourhood.' . $this->{$this->modelClass}->primaryKey => $id));
+            $this->request->data = $this->{$this->modelClass}->find('first', $options);
         }
-        $cities = $this->Neighbourhood->City->find('list');
+        $cities = $this->{$this->modelClass}->City->find('list');
         $this->set(compact('cities'));
     }
 
@@ -115,12 +132,12 @@ class NeighbourhoodsController extends AddressAppController
      */
     public function admin_delete($id = null)
     {
-        $this->Neighbourhood->id = $id;
-        if (!$this->Neighbourhood->exists()) {
+        $this->{$this->modelClass}->id = $id;
+        if (!$this->{$this->modelClass}->exists()) {
             throw new NotFoundException(__('Invalid neighbourhood'));
         }
         $this->request->onlyAllow('post', 'delete');
-        if ($this->Neighbourhood->delete()) {
+        if ($this->{$this->modelClass}->delete()) {
             $this->Session->setFlash(__('The neighbourhood has been deleted.'));
         } else {
             $this->Session->setFlash(__('The neighbourhood could not be deleted. Please, try again.'));

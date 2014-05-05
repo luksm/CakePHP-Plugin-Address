@@ -1,7 +1,7 @@
 <div class="addresses form">
-<?php echo $this->Form->create('Address'); ?>
-	<fieldset>
-		<legend><?php echo __d('address', 'Admin Edit Address'); ?></legend>
+	<h2><?php echo __d('address', 'Admin Edit Address'); ?></h2>
+    <?php echo $this->Form->create('Address'); ?>
+    <fieldset>
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('zip', array("label" => __d('address', "Zip")));

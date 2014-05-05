@@ -1,5 +1,5 @@
 <div class="neighbourhoods view">
-<h2><?php echo __d('address', 'Neighbourhood'); ?></h2>
+    <h2><?php echo __d('address', 'Neighbourhood'); ?></h2>
 	<dl>
 		<dt><?php echo __d('address', 'Id'); ?></dt>
 		<dd>
@@ -61,7 +61,7 @@
 	<?php endforeach; ?>
 	</table>
 <?php endif; ?>
-
+    <?php echo $this->element('admin/menu'); ?>
 	<div class="actions">
 		<ul>
 			<li><?php echo $this->Html->link(__d('address', 'New Address'), array('controller' => 'addresses', 'action' => 'add')); ?> </li>

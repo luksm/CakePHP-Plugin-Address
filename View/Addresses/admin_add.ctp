@@ -1,7 +1,7 @@
 <div class="addresses form">
-<?php echo $this->Form->create('Address'); ?>
+    <h2><?php echo __d('address', 'Admin Edit Address'); ?></h2>
+    <?php echo $this->Form->create('Address'); ?>
     <fieldset>
-        <legend><?php echo __d('address', 'Admin Edit Address'); ?></legend>
     <?php
         echo $this->Form->input('zip', array("label" => __d('address', "Zip")));
     ?>
@@ -15,7 +15,7 @@
         echo $this->Form->input('neighbourhood_id', array("label" => __d('address', "Neighbourhood")));
     ?>
     </fieldset>
-<?php echo $this->Form->end(__d('address', 'Submit')); ?>
+    <?php echo $this->Form->end(__d('address', 'Submit')); ?>
 </div>
 <div class="actions">
     <h3><?php echo __d('address', 'Actions'); ?></h3>

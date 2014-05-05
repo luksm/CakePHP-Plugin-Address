@@ -54,6 +54,12 @@ class State extends AddressAppModel
     public $displayField = 'state';
 
     /**
+     * Defines the table order
+     *
+     * @var array
+     */
+    public $order = array("State.state ASC");
+    /**
      * Validation rules
      *
      * @var array
@@ -104,7 +110,7 @@ class State extends AddressAppModel
             'foreignKey' => 'country_id',
             'conditions' => '',
             'fields' => '',
-            'order' => ''
+            'order' => 'Country.country ASC'
         )
     );
 
@@ -120,7 +126,10 @@ class State extends AddressAppModel
             'dependent' => false,
             'conditions' => '',
             'fields' => '',
-            'order' => '',
+            'order' => array(
+                'City.capital' => 'DESC',
+                'City.city' => 'ASC'
+            ),
             'limit' => '',
             'offset' => '',
             'exclusive' => '',
@@ -141,20 +150,18 @@ class State extends AddressAppModel
      */
     public function getByCountry($country)
     {
-        $return = false;
-        $country = $this->Country->find('first', array('conditions' => array('abbr' => $country), 'recursive' => -1));
-
-        if ($country) {
-            $return = $this->find(
-                'list',
-                array(
-                    'conditions' => array(
-                        "country_id" => $country['Country']['id']
-                    )
-                )
-            );
-        }
-
-        return $return;
+        return $this->find(
+            'all',
+            array(
+                'fields' => array(
+                    "State.id", "State.state"
+                ),
+                'conditions' => array(
+                    "Country.abbr" => $country
+                ),
+                'order' => array("State.state ASC"),
+                'recursive' => 0
+            )
+        );
     }
 }

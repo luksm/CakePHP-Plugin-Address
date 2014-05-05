@@ -16,6 +16,23 @@ class AddressesController extends AddressAppController
      */
     public $components = array('Paginator', 'RequestHandler');
 
+/**
+ * Sets the default pagination settings up
+ *
+ * Override this method or the index() action directly if you want to change
+ * pagination settings. admin_index()
+ *
+ * @return void
+ */
+    protected function _setupAdminPagination() {
+        $this->Paginator->settings = array(
+            'limit' => 20,
+            'order' => array(
+                $this->modelClass . '.created' => 'desc'
+            )
+        );
+    }
+
     /**
      * zip method
      *
@@ -48,9 +65,10 @@ class AddressesController extends AddressAppController
      */
     public function admin_index()
     {
-        $this->Address->recursive = 0;
-        $this->Address->Behaviors->load('Containable');
+        $this->_setupAdminPagination();
+        $this->Paginator->settings[$this->modelClass]['recursive'] = 0;
 
+        $this->Address->Behaviors->load('Containable');
 
         $this->Paginator->settings = array(
             'contain' => array('Neighbourhood.City.State'),

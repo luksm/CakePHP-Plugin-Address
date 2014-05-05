@@ -1,7 +1,7 @@
 <div class="neighbourhoods form">
-<?php echo $this->Form->create('Neighbourhood'); ?>
-	<fieldset>
-		<legend><?php echo __d('address', 'Admin Edit Neighbourhood'); ?></legend>
+	<h2><?php echo __d('address', 'Admin Edit Neighbourhood'); ?></h2>
+    <?php echo $this->Form->create('Neighbourhood'); ?>
+    <fieldset>
 	<?php
 		echo $this->Form->input('id');
 		echo $this->Form->input('city_id', array("label" => __d('address', "City")));
@@ -11,7 +11,8 @@
 <?php echo $this->Form->end(__d('address', 'Submit')); ?>
 </div>
 <div class="actions">
-	<h3><?php echo __d('address', 'Actions'); ?></h3>
+    <?php echo $this->element('admin/menu'); ?>
+    <h3><?php echo __d('address', 'Actions'); ?></h3>
 	<ul>
 
 		<li><?php echo $this->Form->postLink(__d('address', 'Delete'), array('action' => 'delete', $this->Form->value('Neighbourhood.id')), null, __d('address', 'Are you sure you want to delete # %s?', $this->Form->value('Neighbourhood.id'))); ?></li>

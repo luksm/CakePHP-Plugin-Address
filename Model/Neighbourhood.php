@@ -90,7 +90,7 @@ class Neighbourhood extends AddressAppModel
             'foreignKey' => 'city_id',
             'conditions' => '',
             'fields' => '',
-            'order' => ''
+            'order' => array('City.capital' => 'DESC', 'City.city' => 'ASC')
         )
     );
 
@@ -106,7 +106,7 @@ class Neighbourhood extends AddressAppModel
             'dependent' => false,
             'conditions' => '',
             'fields' => '',
-            'order' => '',
+            'order' => 'Address.address ASC',
             'limit' => '',
             'offset' => '',
             'exclusive' => '',

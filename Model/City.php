@@ -101,7 +101,7 @@ class City extends AddressAppModel
             'foreignKey' => 'state_id',
             'conditions' => '',
             'fields' => '',
-            'order' => ''
+            'order' => 'State.state ASC'
         )
     );
 
@@ -117,7 +117,7 @@ class City extends AddressAppModel
             'dependent' => false,
             'conditions' => '',
             'fields' => '',
-            'order' => '',
+            'order' => 'Neighbourhood.neighbourhood ASC',
             'limit' => '',
             'offset' => '',
             'exclusive' => '',

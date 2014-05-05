@@ -50,6 +50,13 @@ class Country extends AddressAppModel
     public $displayField = 'country';
 
     /**
+     * Defines the table order
+     *
+     * @var array
+     */
+    public $order = array("Country.country ASC");
+
+    /**
      * Validation rules
      *
      * @var array
@@ -91,7 +98,7 @@ class Country extends AddressAppModel
             'dependent' => false,
             'conditions' => '',
             'fields' => '',
-            'order' => '',
+            'order' => 'State.state ASC',
             'limit' => '',
             'offset' => '',
             'exclusive' => '',

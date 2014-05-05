@@ -1,5 +1,5 @@
 <div class="addresses view">
-<h2><?php echo __d('address', 'Address'); ?></h2>
+    <h2><?php echo __d('address', 'Address'); ?></h2>
 	<dl>
 		<dt><?php echo __d('address', 'Id'); ?></dt>
 		<dd>

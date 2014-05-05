@@ -2,14 +2,12 @@
 	<h2><?php echo __d('address', 'Countries'); ?></h2>
 	<table cellpadding="0" cellspacing="0">
 	<tr>
-			<th><?php echo $this->Paginator->sort('id'); ?></th>
 			<th><?php echo $this->Paginator->sort('country'); ?></th>
 			<th><?php echo $this->Paginator->sort('abbr'); ?></th>
 			<th class="actions"><?php echo __d('address', 'Actions'); ?></th>
 	</tr>
 	<?php foreach ($countries as $country): ?>
 	<tr>
-		<td><?php echo h($country['Country']['id']); ?>&nbsp;</td>
 		<td><?php echo h($country['Country']['country']); ?>&nbsp;</td>
 		<td><?php echo h($country['Country']['abbr']); ?>&nbsp;</td>
 		<td class="actions">
@@ -35,10 +33,9 @@
 	</div>
 </div>
 <div class="actions">
+    <?php echo $this->element('admin/menu'); ?>
 	<h3><?php echo __d('address', 'Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__d('address', 'New Country'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__d('address', 'List States'), array('controller' => 'states', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__d('address', 'New State'), array('controller' => 'states', 'action' => 'add')); ?> </li>
 	</ul>
 </div>
