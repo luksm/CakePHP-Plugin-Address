@@ -154,7 +154,7 @@ class State extends AddressAppModel
             'all',
             array(
                 'fields' => array(
-                    "State.id", "State.state"
+                    "State.id", "State.fu", "State.state"
                 ),
                 'conditions' => array(
                     "Country.abbr" => $country

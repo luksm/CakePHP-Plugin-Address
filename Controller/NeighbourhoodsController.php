@@ -55,6 +55,13 @@ class NeighbourhoodsController extends AddressAppController
         $this->Paginator->settings[$this->modelClass]['recursive'] = 0;
 
         $this->set('neighbourhoods', $this->Paginator->paginate());
+        $this->set('countries', $this->{$this->modelClass}->City->State->Country->find('list'));
+        $statesTMP = $this->{$this->modelClass}->City->State->find('all', array('fields' => array("id", "state", "country_id"), "recursive" => -1));
+        $states = array();
+        foreach ($statesTMP as $key => $state) {
+            $states[$state['State']['id']] = $state;
+        }
+        $this->set('states', $states);
     }
 
     /**
@@ -90,8 +97,11 @@ class NeighbourhoodsController extends AddressAppController
                 $this->Session->setFlash(__('The neighbourhood could not be saved. Please, try again.'));
             }
         }
-        $cities = $this->{$this->modelClass}->City->find('list');
-        $this->set(compact('cities'));
+        $countries = $this->{$this->modelClass}->City->State->Country->find('list', array("fields" => array("Country.abbr", "Country.country")));
+        $this->set('countries', $countries);
+        $states = $this->{$this->modelClass}->City->State->getByCountry(key($countries));
+        $this->set('states', $states);
+        $this->set('cities', $this->{$this->modelClass}->City->getByState(key($states)));
     }
 
     /**
@@ -117,9 +127,17 @@ class NeighbourhoodsController extends AddressAppController
         } else {
             $options = array('conditions' => array('Neighbourhood.' . $this->{$this->modelClass}->primaryKey => $id));
             $this->request->data = $this->{$this->modelClass}->find('first', $options);
+
+            $state = $this->{$this->modelClass}->City->State->findById($this->request->data['City']['state_id']);
+            $this->set('state', $state['State']['fu']);
+
+            $country = $this->{$this->modelClass}->City->State->Country->findById($state['State']['country_id']);
+            $this->set('country', $country['Country']['abbr']);
+
         }
-        $cities = $this->{$this->modelClass}->City->find('list');
-        $this->set(compact('cities'));
+        $this->set('states', $this->{$this->modelClass}->City->State->getByCountry($country['Country']['abbr']));
+        $this->set('countries', $this->{$this->modelClass}->City->State->Country->find('list', array("fields" => array("Country.abbr", "Country.country"))));
+        $this->set('cities', $this->{$this->modelClass}->City->getByState($state['State']['fu']));
     }
 
     /**

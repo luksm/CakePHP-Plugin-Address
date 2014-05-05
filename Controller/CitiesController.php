@@ -125,8 +125,7 @@ class CitiesController extends AddressAppController
             $this->set('country', $country['Country']['abbr']);
         }
         $this->set('states', $this->{$this->modelClass}->State->find('list', array("conditions" => array("State.country_id" => $this->request->data['State']['country_id']))));
-        $countries = $this->{$this->modelClass}->State->Country->find('list', array("fields" => array("Country.abbr", "Country.country")));
-        $this->set('countries', $countries);
+        $this->set('countries', $this->{$this->modelClass}->State->Country->find('list', array("fields" => array("Country.abbr", "Country.country"))));
     }
 
     /**

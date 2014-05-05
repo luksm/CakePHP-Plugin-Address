@@ -8,7 +8,7 @@
 		</dd>
 		<dt><?php echo __d('address', 'Country'); ?></dt>
 		<dd>
-			<?php echo $this->Html->link($state['Country']['country'], array('controller' => 'loc_countries', 'action' => 'view', $state['Country']['id'])); ?>
+			<?php echo $this->Html->link($state['Country']['country'], array('controller' => 'countries', 'action' => 'view', $state['Country']['id'])); ?>
 			&nbsp;
 		</dd>
 		<dt><?php echo __d('address', 'State'); ?></dt>
@@ -26,7 +26,7 @@
         <h3><?php echo __d('address', 'Related Cities'); ?></h3>
         <div class="actions">
             <ul>
-                <li><?php echo $this->Html->link(__d('address', 'New City'), array('controller' => 'loc_cities', 'action' => 'add')); ?> </li>
+                <li><?php echo $this->Html->link(__d('address', 'New City'), array('controller' => 'cities', 'action' => 'add')); ?> </li>
             </ul>
         </div>
 
@@ -42,9 +42,9 @@
                 <td><?php echo $city['city']; ?></td>
                 <td><?php echo (($city['capital'])?__d('address', "Yes"):__d('address', "No")); ?></td>
                 <td class="actions">
-                    <?php echo $this->Html->link(__d('address', 'View'), array('controller' => 'loc_cities', 'action' => 'view', $city['id'])); ?>
-                    <?php echo $this->Html->link(__d('address', 'Edit'), array('controller' => 'loc_cities', 'action' => 'edit', $city['id'])); ?>
-                    <?php echo $this->Form->postLink(__d('address', 'Delete'), array('controller' => 'loc_cities', 'action' => 'delete', $city['id']), null, __d('address', 'Are you sure you want to delete # %s?', $city['id'])); ?>
+                    <?php echo $this->Html->link(__d('address', 'View'), array('controller' => 'cities', 'action' => 'view', $city['id'])); ?>
+                    <?php echo $this->Html->link(__d('address', 'Edit'), array('controller' => 'cities', 'action' => 'edit', $city['id'])); ?>
+                    <?php echo $this->Form->postLink(__d('address', 'Delete'), array('controller' => 'cities', 'action' => 'delete', $city['id']), null, __d('address', 'Are you sure you want to delete # %s?', $city['id'])); ?>
                 </td>
             </tr>
         <?php endforeach; ?>
@@ -58,6 +58,6 @@
 	<ul>
 		<li><?php echo $this->Html->link(__d('address', 'Edit'), array('action' => 'edit', $state['State']['id'])); ?> </li>
 		<li><?php echo $this->Form->postLink(__d('address', 'Delete'), array('action' => 'delete', $state['State']['id']), null, __d('address', 'Are you sure you want to delete # %s?', $state['State']['id'])); ?> </li>
-        <li><?php echo $this->Html->link(__d('address', 'New City'), array('controller' => 'loc_cities', 'action' => 'add')); ?> </li>
+        <li><?php echo $this->Html->link(__d('address', 'New City'), array('controller' => 'cities', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

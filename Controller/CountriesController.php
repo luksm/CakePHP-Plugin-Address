@@ -40,6 +40,7 @@ class CountriesController extends AddressAppController
     {
         $this->_setupAdminPagination();
         $this->Paginator->settings[$this->modelClass]['recursive'] = 0;
+        $this->Paginator->settings[$this->modelClass]['order'] = array("Country.country" => "ASC");
 
 		$this->set('countries', $this->Paginator->paginate());
 	}

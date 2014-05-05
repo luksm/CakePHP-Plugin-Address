@@ -11,10 +11,10 @@
 	<?php foreach ($cities as $city): ?>
 	<tr>
         <td>
-            <?php echo $this->Html->link($countries[$city['State']['country_id']], array('controller' => 'loc_countries', 'action' => 'view', $city['State']['country_id'])); ?>
+            <?php echo $this->Html->link($countries[$city['State']['country_id']], array('controller' => 'countries', 'action' => 'view', $city['State']['country_id'])); ?>
         </td>
         <td>
-            <?php echo $this->Html->link($city['State']['state'], array('controller' => 'loc_states', 'action' => 'view', $city['State']['id'])); ?>
+            <?php echo $this->Html->link($city['State']['state'], array('controller' => 'states', 'action' => 'view', $city['State']['id'])); ?>
         </td>
 		<td><?php echo h($city['City']['city']); ?>&nbsp;</td>
 		<td><?php echo h(($city['City']['capital'])?__d('address', "Yes"):__d('address', "No")); ?>&nbsp;</td>
@@ -45,8 +45,8 @@
 	<h3><?php echo __d('address', 'Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__d('address', 'New City'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__d('address', 'New Neighbourhood'), array('controller' => 'loc_neighbourhoods', 'action' => 'add')); ?> </li>
-        <li><?php echo $this->Html->link(__d('address', 'New State'), array('controller' => 'loc_states', 'action' => 'add')); ?> </li>
-        <li><?php echo $this->Html->link(__d('address', 'New Address'), array('controller' => 'loc_addresses', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__d('address', 'New Neighbourhood'), array('controller' => 'neighbourhoods', 'action' => 'add')); ?> </li>
+        <li><?php echo $this->Html->link(__d('address', 'New State'), array('controller' => 'states', 'action' => 'add')); ?> </li>
+        <li><?php echo $this->Html->link(__d('address', 'New Address'), array('controller' => 'addresses', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

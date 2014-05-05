@@ -1,5 +1,5 @@
 <div class="cities form">
-    <h2><?php echo __d('address', 'Admin Add City'); ?></h2>
+    <h2><?php echo __d('address', 'Admin Edit City'); ?></h2>
     <?php echo $this->Form->create('City'); ?>
     <fieldset>
     <?php
@@ -16,7 +16,7 @@
     <?php echo $this->element('admin/menu'); ?>
     <h3><?php echo __d('address', 'Actions'); ?></h3>
     <ul>
-        <li><?php echo $this->Html->link(__d('address', 'New State'), array('controller' => 'loc_states', 'action' => 'add')); ?> </li>
+        <li><?php echo $this->Html->link(__d('address', 'New State'), array('controller' => 'states', 'action' => 'add')); ?> </li>
     </ul>
 </div>
 

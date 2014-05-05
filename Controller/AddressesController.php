@@ -109,10 +109,14 @@ class AddressesController extends AddressAppController
                 $this->Session->setFlash(__('The address could not be saved. Please, try again.'));
             }
         }
-        $neighbourhoods = $this->Address->Neighbourhood->find('list');
-        $cities = $this->Address->Neighbourhood->City->find('list');
-        $states = $this->Address->Neighbourhood->City->State->find('list', array('fields' => array('fu', 'state')));
-        $this->set(compact('states', 'cities', 'neighbourhoods'));
+
+        $countries = $this->{$this->modelClass}->Neighbourhood->City->State->Country->find('list', array("fields" => array("Country.abbr", "Country.country")));
+        $this->set('countries', $countries);
+        $states = $this->{$this->modelClass}->Neighbourhood->City->State->getByCountry(key($countries));
+        $this->set('states', $states);
+        $cities = $this->{$this->modelClass}->Neighbourhood->City->getByState(key($states));
+        $this->set('cities', $cities);
+        $this->set('neighbourhoods', $this->{$this->modelClass}->Neighbourhood->getByStateCity(key($states)."|".key($cities)));
     }
 
     /**

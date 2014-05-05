@@ -10,8 +10,10 @@
     <?php
         echo $this->Form->input('information', array("label" => __d('address', "Information")));
         echo $this->Form->input('address', array("label" => __d('address', "Address")));
-        echo $this->Form->input('state_id', array("label" => __d('address', "State")));
-        echo $this->Form->input('city_id', array("label" => __d('address', "City")));
+        echo $this->Form->input('Country', array("label" => __d('address', "Country")));
+        echo $this->Form->input('State', array("label" => __d('address', "State")));
+        echo $this->Form->input('City', array("label" => __d('address', "City")));
+        echo $this->Form->input('city_id', array("type" => 'text'));
         echo $this->Form->input('neighbourhood_id', array("label" => __d('address', "Neighbourhood")));
     ?>
     </fieldset>
@@ -29,18 +31,44 @@
 </div>
 
 <?php
-echo $this->Html->Script(
-    "//code.jquery.com/jquery-1.10.2.min.js",
-    array('inline' => false)
-);
-
-$webroot = $this->webroot;
 
 $js = <<<EOD
-var xhr;
-var webroot = "{$webroot}" + "address/";
+var webroot = "{$this->webroot}";
+var stateObj;
+var cityObj;
+var hoodsObj;
 
-function zip(zip) {
+function setState(states) {
+    removeChilds(stateObj);
+    removeChilds(cityObj);    
+    for (var id in states)
+    {
+        stateObj.appendChild(newElement("option", states[id].State.state, states[id].State.fu, "State" + states[id].State.id));
+    }
+    $( "#NeighbourhoodState" ).trigger( "change" );
+}
+
+function setCity(cities) {
+    removeChilds(cityObj);
+    for (var id in cities)
+    {
+        cityObj.appendChild(newElement("option", cities[id].City.city, cities[id].City.slug, "City" + cities[id].City.id));
+    }
+    $( "#" + cityObj.id ).trigger( "change" );
+
+}
+
+function setHoods(hoods) {
+    removeChilds(hoodsObj);
+    for (var id in hoods)
+    {
+        hoodsObj.appendChild(newElement("option", hoods[id].Neighbourhood.neighbourhood, hoods[id].Neighbourhood.id, "Neighbourhood" + hoods[id].Neighbourhood.id));
+    }
+    document.getElementById("AddressCityId").value = hoods[id].Neighbourhood.city_id;
+}
+
+
+function externalZip(zip) {
 
     zip = zip.substr(0,5) + zip.substr(6,3);
 
@@ -54,20 +82,9 @@ function zip(zip) {
     })
     .done(function(data) {
 
-        // Change the state
-        var states = document.getElementById("AddressStateId");
-        for(var opt in states) {
-            if(states[opt].value == data.uf) {
-                states.selectedIndex = opt;
-                break;
-            }
-        }
-
-        // Change the city
-        loadCities(document.getElementById("AddressCityId"), data.uf, data.localidade);
-
-        // Change the Neighbourhood
-        loadHoods(document.getElementById("AddressNeighbourhoodId"), data.uf, data.localidade, data.bairro);
+        $("#AddressCountry").val("BR");
+        $("#AddressCountry").trigger("change");
+        $("#AddressState").val(data.uf);
 
         document.getElementById("AddressAddress").value = data.logradouro;
         document.getElementById("AddressInformation").value = data.logradouro;
@@ -76,105 +93,29 @@ function zip(zip) {
     });
 }
 
-function loadCities(dest, uf, select = false) {
-    xhr = $.ajax({
-        url: webroot + "cities/byState/" + uf,
-        dataType: "json"
-    })
-    .done(function(data) {
-        var sel = dest;
-        while (sel.firstChild) {
-            sel.removeChild(sel.firstChild);
-        }
-        for (var i in data) {
-
-            var option = document.createElement('option');
-            option.value = i;
-            option.textContent = data[i];
-
-            if (select == data[i]) {
-                option.defaultSelected = "selected";
-            }
-
-            sel.appendChild(option);
-        }
-    });
-}
-
-function loadHoods(dest, uf, city, select = false) {
-    xhr = $.ajax({
-        url: webroot + "neighbourhoods/byStateCity/" + uf + '-' + city,
-        dataType: "json"
-    })
-    .done(function(data) {
-        var sel = dest;
-        while (sel.firstChild) {
-            sel.removeChild(sel.firstChild);
-        }
-        for (var i in data) {
-            var option = document.createElement('option');
-            option.value = i;
-            option.textContent = data[i];
-
-            if (select == data[i]) {
-                option.defaultSelected = "selected";
-            }
-
-            sel.appendChild(option);
-        }
-    });
-}
-
-function getSelectedText(elementId) {
-    var elt = document.getElementById(elementId);
-
-    if (elt.selectedIndex == -1)
-        return null;
-
-    return elt.options[elt.selectedIndex].text;
-}
-
-
 $( document ).ready(function() {
+    stateObj = document.getElementById("AddressState");
+    cityObj = document.getElementById("AddressCity");
+    hoodsObj = document.getElementById("AddressNeighbourhoodId");
+
+    $("#AddressCountry").change(function() { state(this.value, setState); });
+    $("#AddressState").change(function() { city(this.value, setCity); });
+    $("#AddressCity").change(function() { neighbourhood(stateObj.value+"|"+this.value, setHoods);});
+
     var lastZip = "";
-    var states = document.getElementById("AddressStateId");
-    var cities = document.getElementById("AddressCityId");
-    var hoods  = document.getElementById("AddressNeighbourhoodId");
 
     $("#AddressZip").keyup(function() {
         if (lastZip != this.value) {
             lastZip = this.value;
-            zip(this.value);
+            externalZip(this.value);
         }
     });
 
-    $("#AddressStateId").change(function() {
-        loadCities(cities, this.value);
-    });
-
-    $("#AddressCityId").change(function() {
-        loadHoods(hoods, states.value, getSelectedText(this.id));
-    });
 });
-
 EOD;
 
-echo $this->Html->ScriptBlock(
-    $js,
-    array(
-        'inline' => false,
-        'block' => "script"
-    )
-);
-
-if (!empty($zip)) {
-    echo $this->Html->ScriptBlock(
-        '$( document ).ready(function() { $( "#AddressZip" ).trigger( "keyup" ); });',
-        array(
-            'inline' => false,
-            'block' => "script"
-        )
-    );
-}
-
-?>
+/* Grab Google CDN's jQuery. fall back to local if necessary */
+echo $this->Html->script('//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js', array('inline' => false));
+echo $this->Html->scriptBlock("!window.jQuery && document.write(unescape('%3Cscript src=\"js/jquery-1.11.0.min.js\"%3E%3C/script%3E'))", array('inline' => false));
+echo $this->Html->Script("Address.address", array('inline' => false));
+echo $this->Html->ScriptBlock( $js, array('inline' => false, 'block' => "script"));

@@ -14,6 +14,6 @@
     <?php echo $this->element('admin/menu'); ?>
 	<h3><?php echo __d('address', 'Actions'); ?></h3>
 	<ul>
-		<li><?php echo $this->Html->link(__d('address', 'New Country'), array('controller' => 'loc_countries', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__d('address', 'New Country'), array('controller' => 'countries', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

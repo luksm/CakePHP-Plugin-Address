@@ -16,7 +16,7 @@
     <?php echo $this->element('admin/menu'); ?>
     <h3><?php echo __d('address', 'Actions'); ?></h3>
     <ul>
-        <li><?php echo $this->Html->link(__d('address', 'New State'), array('controller' => 'loc_states', 'action' => 'add')); ?> </li>
+        <li><?php echo $this->Html->link(__d('address', 'New State'), array('controller' => 'states', 'action' => 'add')); ?> </li>
     </ul>
 </div>
 
@@ -24,7 +24,7 @@
 
 $js = <<<EOD
 var webroot = "{$this->webroot}";
-var stateObj = document.getElementById("CityStateId");
+var stateObj;
 
 function setState(states) {
     removeChilds(stateObj);
@@ -35,6 +35,7 @@ function setState(states) {
 }
 
 $( document ).ready(function() {
+    stateObj = document.getElementById("CityStateId");
     $("#CityCountry").change(function() { state(this.value, setState); });
 });
 EOD;

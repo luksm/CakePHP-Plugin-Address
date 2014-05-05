@@ -1,7 +1,7 @@
 var xhr;
 
 function removeChilds(element) {
-    while (element.firstChild) {
+    while (element.firstElementChild) {
       element.removeChild(element.firstChild);
     }
 }
@@ -70,7 +70,7 @@ function neighbourhood(city, call) {
     }
 
     xhr = $.ajax({
-        url: webroot + "address/neighbourhoods/byCity/" + city,
+        url: webroot + "address/neighbourhoods/byStateCity/" + city,
         dataType: "json"
     })
     .done(function(data) {

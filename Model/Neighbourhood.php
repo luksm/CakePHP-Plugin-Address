@@ -130,8 +130,9 @@ class Neighbourhood extends AddressAppModel
         }
         return true;
     }
+
     /**
-     * getByCity
+     * getByStateCity
      *
      * Filter hoods by city
      *
@@ -147,19 +148,21 @@ class Neighbourhood extends AddressAppModel
         $state = substr($city, 0, 2);
         $city = substr($city, 3);
 
-        $city = $this->City->find('first', array('conditions' => array('City.city' => $city, 'State.fu' => $state)));
+        $city = $this->City->find('first', array('conditions' => array('City.slug' => $city, 'State.fu' => $state)));
 
         if ($city) {
             $return = $this->find(
-                'list',
+                'all',
                 array(
                     'conditions' => array(
                         "city_id" => $city['City']['id']
-                    )
+                    ),
+                    'recursive' => -1
                 )
             );
         }
 
         return $return;
     }
+
 }

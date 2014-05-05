@@ -1,15 +1,23 @@
 <div class="neighbourhoods index">
 	<h2><?php echo __d('address', 'Neighbourhoods'); ?></h2>
 	<table cellpadding="0" cellspacing="0">
-	<tr>
+		<tr>
+			<th><?php echo __d('address', 'Country'); ?></th>
+			<th><?php echo __d('address', 'State'); ?></th>
 			<th><?php echo $this->Paginator->sort('city_id', __d('address', 'City')); ?></th>
 			<th><?php echo $this->Paginator->sort('neighbourhood', __d('address', 'Neighbourhood')); ?></th>
 			<th class="actions"><?php echo __d('address', 'Actions'); ?></th>
-	</tr>
+		</tr>
 	<?php foreach ($neighbourhoods as $neighbourhood): ?>
 	<tr>
 		<td>
-			<?php echo $this->Html->link($neighbourhood['City']['city'], array('controller' => 'loc_cities', 'action' => 'view', $neighbourhood['City']['id'])); ?>
+			<?php echo $this->Html->link($countries[$states[$neighbourhood['City']['state_id']]['State']['country_id']], array('controller' => 'cities', 'action' => 'view', $neighbourhood['City']['id'])); ?>
+		</td>
+		<td>
+			<?php echo $this->Html->link($states[$neighbourhood['City']['state_id']]['State']['state'], array('controller' => 'states', 'action' => 'view', $neighbourhood['City']['state_id'])); ?>
+		</td>
+		<td>
+			<?php echo $this->Html->link($neighbourhood['City']['city'], array('controller' => 'cities', 'action' => 'view', $neighbourhood['City']['id'])); ?>
 		</td>
 		<td><?php echo h($neighbourhood['Neighbourhood']['neighbourhood']); ?>&nbsp;</td>
 		<td class="actions">
@@ -39,9 +47,7 @@
 	<h3><?php echo __d('address', 'Actions'); ?></h3>
 	<ul>
 		<li><?php echo $this->Html->link(__d('address', 'New Neighbourhood'), array('action' => 'add')); ?></li>
-		<li><?php echo $this->Html->link(__d('address', 'List Cities'), array('controller' => 'loc_cities', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__d('address', 'New City'), array('controller' => 'loc_cities', 'action' => 'add')); ?> </li>
-		<li><?php echo $this->Html->link(__d('address', 'List Addresses'), array('controller' => 'loc_addresses', 'action' => 'index')); ?> </li>
-		<li><?php echo $this->Html->link(__d('address', 'New Address'), array('controller' => 'loc_addresses', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__d('address', 'New City'), array('controller' => 'cities', 'action' => 'add')); ?> </li>
+		<li><?php echo $this->Html->link(__d('address', 'New Address'), array('controller' => 'addresses', 'action' => 'add')); ?> </li>
 	</ul>
 </div>

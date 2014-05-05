@@ -10,7 +10,7 @@
     <?php foreach ($states as $state): ?>
     <tr>
         <td>
-            <?php echo $this->Html->link($state['Country']['country'], array('controller' => 'loc_countries', 'action' => 'view', $state['Country']['id'])); ?>
+            <?php echo $this->Html->link($state['Country']['country'], array('controller' => 'countries', 'action' => 'view', $state['Country']['id'])); ?>
         </td>
         <td><?php echo h($state['State']['fu']); ?>&nbsp;</td>
         <td><?php echo h($state['State']['state']); ?>&nbsp;</td>

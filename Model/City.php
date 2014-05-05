@@ -154,21 +154,18 @@ class City extends AddressAppModel
      */
     public function getByState($state)
     {
-        $return = false;
-        $state = $this->State->find('first', array('conditions' => array('fu' => $state), 'recursive' => -1));
-
-        if ($state) {
-            $return = $this->find(
-                'list',
-                array(
-                    'conditions' => array(
-                        "state_id" => $state['State']['id']
-                    )
-                )
-            );
-        }
-
-        return $return;
+        return $this->find(
+            'all',
+            array(
+                'fields' => array(
+                    'City.id', 'City.slug', 'City.city'
+                ),
+                'conditions' => array(
+                    "State.fu" => $state
+                ),
+                'recursive' => 0
+            )
+        );
     }
 
     /**
